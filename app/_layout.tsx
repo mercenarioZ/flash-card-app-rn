@@ -22,6 +22,13 @@ const _layout = () => {
           title: "Explore",
         }}
       />
+
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: "Profile",
+        }}
+      />
     </Tabs>
   );
 };

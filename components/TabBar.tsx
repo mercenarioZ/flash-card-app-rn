@@ -1,6 +1,6 @@
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
-import { Text, TouchableOpacity, View } from "react-native";
-import { AntDesign, Feather } from "@expo/vector-icons";
+import { View } from "react-native";
+import TabBarButton from "./TabBarButton";
 
 const TabBar: React.FC<BottomTabBarProps> = ({
   state,
@@ -9,23 +9,6 @@ const TabBar: React.FC<BottomTabBarProps> = ({
 }) => {
   const primaryColor = "#0891b1";
   const inactiveColor = "#73737373";
-
-  const icons: { [key: string]: (props: any) => JSX.Element } = {
-    index: (props: any) => (
-      <AntDesign
-        name="home"
-        size={24}
-        {...props}
-      />
-    ),
-    explore: (props: any) => (
-      <Feather
-        name="compass"
-        size={24}
-        {...props}
-      />
-    ),
-  };
 
   return (
     <View
@@ -83,31 +66,15 @@ const TabBar: React.FC<BottomTabBarProps> = ({
         };
 
         return (
-          <TouchableOpacity
-            key={route.key}
-            accessibilityRole="button"
-            accessibilityState={isFocused ? { selected: true } : {}}
-            accessibilityLabel={options.tabBarAccessibilityLabel}
+          <TabBarButton
+            key={route.name}
             onPress={onPress}
             onLongPress={onLongPress}
-            style={{
-              flex: 1,
-              justifyContent: "center",
-              alignItems: "center",
-              gap: 3,
-            }}
-          >
-            {icons[route.name]({
-              color: isFocused ? primaryColor : inactiveColor,
-            })}
-            <Text
-              style={{
-                color: isFocused ? primaryColor : inactiveColor,
-              }}
-            >
-              {label as string}
-            </Text>
-          </TouchableOpacity>
+            isFocused={isFocused}
+            routeName={route.name}
+            label={label as string}
+            color={isFocused ? primaryColor : inactiveColor}
+          />
         );
       })}
     </View>

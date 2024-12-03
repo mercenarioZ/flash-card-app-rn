@@ -1,7 +1,13 @@
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import React from "react";
+import TopicList from "@/components/TopicList";
+import { topics } from "@/types";
 
 const Home = () => {
+  const handleSelectTopic = (topicId: string) => {
+    console.log("Selected topic:", topicId);
+  };
+
   return (
     <View
       style={{
@@ -10,7 +16,10 @@ const Home = () => {
         alignItems: "center",
       }}
     >
-      <Text>Home</Text>
+      <TopicList
+        topics={topics}
+        onSelectTopic={handleSelectTopic}
+      />
     </View>
   );
 };
