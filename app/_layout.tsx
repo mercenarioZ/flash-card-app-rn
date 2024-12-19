@@ -1,36 +1,22 @@
-import TabBar from "@/components/TabBar";
-import { Tabs } from "expo-router";
+import { Stack } from "expo-router";
+import Colors from "@/constants/Colors";
 
-const _layout = () => {
+const StackLayout = () => {
   return (
-    <Tabs
+    <Stack
       screenOptions={{
-        headerShown: false,
+        headerStyle: {
+          backgroundColor: Colors.primary,
+        },
+        headerTintColor: "#fff",
       }}
-      tabBar={(props) => <TabBar {...props} />}
     >
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: "Home",
-        }}
+      <Stack.Screen
+        name="(tabs)"
+        options={{ headerShown: false }}
       />
-
-      <Tabs.Screen
-        name="explore"
-        options={{
-          title: "Explore",
-        }}
-      />
-
-      <Tabs.Screen
-        name="profile"
-        options={{
-          title: "Profile",
-        }}
-      />
-    </Tabs>
+    </Stack>
   );
 };
 
-export default _layout;
+export default StackLayout;
