@@ -1,3 +1,4 @@
 export default {
-  primary: "#536162",
+  primary: "#72BAA9",
+  backside: "#b1f0f7",
 };

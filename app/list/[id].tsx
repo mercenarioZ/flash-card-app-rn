@@ -2,54 +2,52 @@ import { View, Text, Button, StyleSheet, TouchableOpacity } from "react-native";
 import { useLocalSearchParams, Stack } from "expo-router";
 import mockData from "@/mock-data.json";
 import { useState } from "react";
+import Card from "@/components/Card";
+import Colors from "@/constants/Colors";
 
 const ListDetail = () => {
   const { id } = useLocalSearchParams();
-  const flashcard = mockData.filter((item) => item.topic === id);
-  console.log(flashcard);
-  const [isShown, setIsShown] = useState(false);
 
-  if (!flashcard) {
-    return;
+  const topics = mockData.filter((item) => item.topic === id);
+  const flashcards = topics[0]?.flashcards;
+
+  const [shownCardIds, setShownCardIds] = useState<{ [key: string]: boolean }>(
+    {}
+  );
+
+  if (!flashcards) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Text>No flashcards found</Text>
+      </View>
+    );
   }
 
-  const onShowAnswerPress = () => {
-    console.log("Answer is shown");
-    setIsShown((prev) => !prev);
+  const handleRotateCard = (cardId: string) => {
+    setShownCardIds((prevShownCardIds) => ({
+      ...prevShownCardIds,
+      [cardId]: !prevShownCardIds[cardId],
+    }));
   };
 
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <Stack.Screen options={{ headerTitle: "Flashcards" }} />
 
-      {flashcard &&
-        flashcard.map((item) => (
-          <View>
-            <Text
-              key={item.id}
-              style={styles.question}
-            >
-              {item.question}
-            </Text>
-
-            <TouchableOpacity>
-              <Button
-                title="Show"
-                onPress={onShowAnswerPress}
-              />
-            </TouchableOpacity>
-          </View>
+      {flashcards &&
+        flashcards.map((item) => (
+          <TouchableOpacity
+            key={item.id}
+            onPress={() => handleRotateCard(item.id)}
+          >
+            <Card
+              content={shownCardIds[item.id] ? item.answer : item.question}
+              color={shownCardIds[item.id] ? Colors.backside : "white"}
+            />
+          </TouchableOpacity>
         ))}
     </View>
   );
 };
 
 export default ListDetail;
-
-const styles = StyleSheet.create({
-  question: {
-    fontSize: 20,
-    marginBottom: 4,
-    fontWeight: "semibold",
-  },
-});

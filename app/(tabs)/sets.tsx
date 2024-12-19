@@ -45,14 +45,17 @@ export default Sets;
 const styles = StyleSheet.create({
   item: {
     padding: 10,
+    paddingVertical: 20,
     marginVertical: 7,
     borderRadius: 8,
     backgroundColor: Colors.primary,
+    width: 300,
   },
 
   itemText: {
     color: "white",
-    fontSize: 16,
+    fontSize: 22,
+    fontWeight: "bold",
     textAlign: "center",
   },
 });
